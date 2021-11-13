@@ -8,7 +8,7 @@ class PandaRouter
     /**
      * @return string - the path of the request url and removes the last backslash
      */
-    private function httpRequest(): string
+    public function httpRequest(): string
     {
         $requestUri = parse_url($_SERVER['REQUEST_URI']);
         $requestPath = $requestUri['path'];
@@ -111,7 +111,11 @@ class PandaRouter
     {
         // ERROR 404
         $default = $this->defaultRoute;
-        call_user_func([$default["controller"], $default["action"]]);
+        if ($default["controller"] === null) {
+            call_user_func($default["action"]);
+        } else {
+            call_user_func([$default["controller"], $default["action"]]);
+        }
     }
 
     /**
@@ -203,8 +207,11 @@ class PandaRouter
             }
         }
 
+        if ($match && $selectedRoute['controller'] === null) {
+            call_user_func($selectedRoute['action']);
+        }
         // Checks if it is a match and a callable function within this configuration in the selected Route
-        if ($match && is_callable([$selectedRoute['controller'], $selectedRoute['action']])) {
+        elseif ($match && is_callable([$selectedRoute['controller'], $selectedRoute['action']])) {
             #--MATCH--#
             call_user_func_array([$selectedRoute['controller'], $selectedRoute['action']], [$selectedRoute['params']]);
         } else {

@@ -1,20 +1,30 @@
 <?php
 error_reporting(E_ALL);
 require_once __DIR__ . '/PandaRouter.php';
+
+#DEMO FUNCTION
+$home = function () {
+    echo 'Startseite';
+};
+
+$demo = function () {
+    echo 'Demo';
+};
+
+$error = function () {
+    echo 'Error';
+};
+
+# ROUTING 
 $router = new PandaRouter;
+$router->setPrefixRoute('/panda-router');
 
-$router->get('/panda-router', null, function(){
-    echo 'Start Seite';
-});
+# ROUTS WITHOUT CONTROLLER CLASSES
+$router->get('', null, $home);
+$router->get('/demo/', null, $demo);
+$router->default(null, $error);
 
-$router->get('/panda-router/demo/', null, function(){
-    echo 'DEMO SEITE';
-});
-
-$router->default(null, function(){
-    echo 'Error Seite';
-});
-
+# STARTS THE ROUTER 
 $router->run();
 
 // #Static GET-Route

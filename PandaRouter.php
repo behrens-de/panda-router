@@ -2,6 +2,7 @@
 
 class PandaRouter
 {
+    private $prefixRoute;
     private $defaultRoute;
     private $routes = [];
 
@@ -21,7 +22,7 @@ class PandaRouter
     private function setRoute($path, $controller, $action, $params = []): array
     {
         return [
-            'path' => $path,
+            'path' => $this->prefixRoute.$path,
             'controller' => $controller,
             'action' => $action,
             'params' => $params,
@@ -56,6 +57,13 @@ class PandaRouter
                 break;
         }
         return $routes;
+    }
+    /**
+     * set a prefix for the Path e.G. test/path
+     */
+    public function setPrefixRoute($prefix = ''): void
+    {
+        $this->prefixRoute = $prefix;
     }
 
     /**

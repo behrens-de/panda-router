@@ -1,11 +1,11 @@
 <?php
 error_reporting(E_ALL);
 require_once __DIR__ . '/PandaRouter.php';
+require_once __DIR__ . '/DemoController.php';
 
-#DEMO FUNCTION
-$home = function () {
-    echo 'Startseite';
-};
+$controller = new DemoController;
+
+
 
 $demo = function () {
     echo 'Demo';
@@ -20,7 +20,7 @@ $router = new PandaRouter;
 $router->setPrefixRoute('/panda-router');
 
 # ROUTS WITHOUT CONTROLLER CLASSES
-$router->get('', null, $home);
+$router->get('/', $controller, 'home',['test'=>'test']);
 $router->get('/demo/', null, $demo);
 $router->default(null, $error);
 

@@ -59,7 +59,7 @@ $router->default(null, $error);
 
 #### OPTION B
 
-Routes by functions in Methods
+Routes by functions in Objects
 
 ```php
 #index.php (example)

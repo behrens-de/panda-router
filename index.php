@@ -5,8 +5,6 @@ require_once __DIR__ . '/DemoController.php';
 
 $controller = new DemoController;
 
-
-
 $demo = function () {
     echo 'Demo';
 };
@@ -19,8 +17,20 @@ $error = function () {
 $router = new PandaRouter;
 $router->setPrefixRoute('/panda-router');
 
-# ROUTS WITHOUT CONTROLLER CLASSES
+/**
+ * 
+ * ROUTS 
+ * 
+ */
+
+
+#Static GET-Route
 $router->get('/', $controller, 'home',['test'=>'test']);
+
+#Dynamic GET-Route
+$router->get('/:param1,param2', $controller, 'home',['test'=>'test']);
+
+#...
 $router->get('/demo/', null, $demo);
 $router->default(null, $error);
 
